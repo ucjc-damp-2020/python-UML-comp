@@ -1,131 +1,174 @@
+' @startuml
+' hide empty description
+' [*] --> despertar
+' state choice1 <<choice>>
+' despertar --> choice1
+' state fork1 <<fork>>
+' choice1 --> fork1
+' state "volver a dormirse" as sleepAgain
+' choice1 --> sleepAgain
+' state "Desayunar" as breakfast
+' state "Leer el periodico" as readNewspaper
+' state fork2 <<fork>>
+' fork1 --> breakfast
+' fork1 --> readNewspaper
+' breakfast --> fork2
+' readNewspaper --> fork2
+' fork2 --> [*]
+' sleepAgain --> [*]
+' @enduml
+
+' @startuml
+' left to right direction
+' cliente --> (Entrega dinero)
+' cliente --> (Escoge producto)
+' cliente --> (Escoge azucar)
+' maquina --> (Prepara producto)
+' maquina --> (Imprime recibo)
+' maquina --> (Entrega producto)
+' (Prepara producto) --> (Escoge azucar) : include
+' (Prepara producto) --> (Escoge producto) : include
+' (Entrega producto) --> (Prepara producto) : include
+' (Imprime recibo) --> (Entrega producto) : extends
+' (Devuelve cambio) --> (Entrega producto) : extends
+' @enduml
+
+' @startuml
+' participant GUI
+' participant "Sistema Operativo" as SO
+' GUI -> SO
+' activate SO
+' participant CPU
+' SO -> CPU
+' activate CPU
+' participant "Tarjeta de Video" as GPU
+' CPU -> GPU
+' activate GPU
+' participant Monitor
+' GPU -> Monitor
+' activate Monitor
+' Monitor --> GPU
+' deactivate Monitor
+' GPU --> CPU
+' deactivate GPU
+' CPU --> SO
+' deactivate CPU
+' SO --> GUI
+' deactivate SO
+
+' @enduml
+
+' @startuml
+' participant Cliente
+' participant Maquina
+' Cliente -> Maquina : Entrega Dinero
+' activate Maquina
+' Maquina -> Cliente : Pide Producto
+' activate Cliente
+' Cliente --> Maquina : Escoge Producto
+' deactivate Cliente
+' Maquina -> Cliente : Pide cantidad de azucar
+' activate Cliente
+' Cliente --> Maquina : Cantidad de azucar
+' deactivate Cliente
+' deactivate Maquina
+' Maquina -> Maquina : Prepara Producto
+' activate Maquina
+' deactivate Maquina
+' Cliente -> Maquina : Elige si quiere recibo
+' activate Maquina
+' Maquina -> Cliente : Entrega Producto
+' activate Cliente
+' deactivate Cliente
+' Maquina -> Cliente : Entrega Recibo
+' activate Cliente
+' deactivate Cliente
+' Maquina -> Cliente : Entrega Cambio
+' activate Cliente
+' deactivate Cliente
+' deactivate Maquina
+' @enduml
+
+' @startuml
+' actor Client
+' participant Program
+' participant Carrito
+' participant Productos
+' Client -> Program : CrearCarrito
+' activate Program
+' Program --> Carrito : Crear Carrito
+' activate Carrito
+' Carrito --> Productos : Crear Lista <producto>
+' activate Productos
+' Productos --> Carrito : Return
+' deactivate Productos
+' Carrito --> Program : Return
+' deactivate Carrito
+' deactivate Program
+' @enduml
+
+' @startuml
+' actor Client
+' participant Program
+' participant Producto
+' Client -> Program : CrearProducto
+' activate Program
+' Program -> Producto : Crear Producto
+' activate Producto
+' Producto -> Program : Return
+' deactivate Producto
+' deactivate Program
+' @enduml
+
+' @startuml
+' hide empty description
+' start
+' :i=0;
+' while (i < 5?)
+'     :i++;
+' endwhile
+' end
+' @enduml
+
+
+
+
+
 @startuml
-hide empty description
-[*] --> despertar
-state choice1 <<choice>>
-despertar --> choice1
-state fork1 <<fork>>
-choice1 --> fork1
-state "volver a dormirse" as sleepAgain
-choice1 --> sleepAgain
-state "Desayunar" as breakfast
-state "Leer el periodico" as readNewspaper
-state fork2 <<fork>>
-fork1 --> breakfast
-fork1 --> readNewspaper
-breakfast --> fork2
-readNewspaper --> fork2
-fork2 --> [*]
-sleepAgain --> [*]
+(*) --> "Primera Actividad"
+if "Alguna Condición" then
+--> ["Si"] "Segunda Actividad"
+else
+["No"] if "Otra Condicion" then
+--> ["Si"] "Tercera Actividad"
+else
+--> ["No"] (*)
+Endif
+"Segunda Actividad" --> (*)
 @enduml
 
+
 @startuml
-left to right direction
-cliente --> (Entrega dinero)
-cliente --> (Escoge producto)
-cliente --> (Escoge azucar)
-maquina --> (Prepara producto)
-maquina --> (Imprime recibo)
-maquina --> (Entrega producto)
-(Prepara producto) --> (Escoge azucar) : include
-(Prepara producto) --> (Escoge producto) : include
-(Entrega producto) --> (Prepara producto) : include
-(Imprime recibo) --> (Entrega producto) : extends
-(Devuelve cambio) --> (Entrega producto) : extends
+rectangle "Use" {
+    usecase "Use Case" as UC
+    usecase "Use Case2" as UC2
+    usecase "Use Case3" as UC3
+    usecase "Use Case4" as UC4
+}
+:Actor1: --> UC
+:Actor2: --> UC3
+UC --> UC2 : extend
+UC3 --> UC4 : include
 @enduml
 
-@startuml
-participant GUI
-participant "Sistema Operativo" as SO
-GUI -> SO
-activate SO
-participant CPU
-SO -> CPU
-activate CPU
-participant "Tarjeta de Video" as GPU
-CPU -> GPU
-activate GPU
-participant Monitor
-GPU -> Monitor
-activate Monitor
-Monitor --> GPU
-deactivate Monitor
-GPU --> CPU
-deactivate GPU
-CPU --> SO
-deactivate CPU
-SO --> GUI
-deactivate SO
-
-@enduml
 
 @startuml
-participant Cliente
-participant Maquina
-Cliente -> Maquina : Entrega Dinero
-activate Maquina
-Maquina -> Cliente : Pide Producto
-activate Cliente
-Cliente --> Maquina : Escoge Producto
-deactivate Cliente
-Maquina -> Cliente : Pide cantidad de azucar
-activate Cliente
-Cliente --> Maquina : Cantidad de azucar
-deactivate Cliente
-deactivate Maquina
-Maquina -> Maquina : Prepara Producto
-activate Maquina
-deactivate Maquina
-Cliente -> Maquina : Elige si quiere recibo
-activate Maquina
-Maquina -> Cliente : Entrega Producto
-activate Cliente
-deactivate Cliente
-Maquina -> Cliente : Entrega Recibo
-activate Cliente
-deactivate Cliente
-Maquina -> Cliente : Entrega Cambio
-activate Cliente
-deactivate Cliente
-deactivate Maquina
-@enduml
-
-@startuml
-actor Client
-participant Program
-participant Carrito
-participant Productos
-Client -> Program : CrearCarrito
-activate Program
-Program --> Carrito : Crear Carrito
-activate Carrito
-Carrito --> Productos : Crear Lista <producto>
-activate Productos
-Productos --> Carrito : Return
-deactivate Productos
-Carrito --> Program : Return
-deactivate Carrito
-deactivate Program
-@enduml
-
-@startuml
-actor Client
-participant Program
-participant Producto
-Client -> Program : CrearProducto
-activate Program
-Program -> Producto : Crear Producto
-activate Producto
-Producto -> Program : Return
-deactivate Producto
-deactivate Program
-@enduml
-
-@startuml
-hide empty description
-start
-:i=0;
-while (i < 5?)
-    :i++;
-endwhile
-end
+Alicia -> Bob : Requerimiento de conexión
+activate Bob
+Bob -> Pepe : Requerimiento de datos
+activate Pepe
+Pepe --> Bob : Respuesta de datos
+deactivate Pepe
+Bob --> Alicia : Conexión aceptada
+deactivate Bob
 @enduml
